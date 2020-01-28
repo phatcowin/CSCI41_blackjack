@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <Deck.h>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class Player {
 	public:
 		// Constructors:
 		Player(int x);
-		
+
 		// Accessors:
 		int get_score();
 
@@ -28,7 +29,7 @@ class Player {
 
 		}
 		void Player::draw_card() {
-
+			
 		}
 };
 

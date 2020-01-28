@@ -43,6 +43,12 @@ class Deck {
         // Constructors:
         Deck();
 
+	// Accessors:
+	string output_card();
+
+	// Mutators:
+	void reshuffle();
+	
         // Implementations:
         Deck::Deck() {
             int shuffle; // Create an int to store our randomly generated number
@@ -68,6 +74,9 @@ class Deck {
             else y += " of Spades"
             return y;
         }
+	void Deck::shuffle() {
+
+	}
 };
 
 #endif /* Deck_h */
