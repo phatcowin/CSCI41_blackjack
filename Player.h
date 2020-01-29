@@ -26,11 +26,13 @@ class Player {
 		void draw(string x);
 
 		// Implementations:
-		Player::Player(bool x) {
-			
+		Player::Player(bool x) { // Make a player
+			human = x; // Set whether the player is a human or bot
 		}
 		void Player::get_hand() {
-
+			for (int i(0); i < hand.size(); i++) { // For every item in the player's hand
+				cout << hand.at(i) << "\n"; // Output the item
+			}
 		}
 		int Player::total() {
 			hand_sum = 0;
