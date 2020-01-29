@@ -10,21 +10,21 @@ using namespace std;
   
 class Card {
     private:
-        int card_number(0), card_suite(0);
+        int card_number(0), card_suit(0);
     public:
         // Constructors:
         Card(int x);
 
         // Accessors:
         string get_face();
-        string get_suite();
+        string get_suit();
 
         // Implementations:
         Card::Card(int x) {
 			if (x > 51 || x < -1) break; // Break if the card value is invalid
             while (x > 12) { // Assign the number of times 13 can be subtracted from our card number and remain above 12 to the card suite
                 x -= 13;
-                card_suite++ // Card suite is either 0 (clubs), 1 (diamonds), 2 (hearts) or 3 (spades)
+                card_suit++ // Card suite is either 0 (clubs), 1 (diamonds), 2 (hearts) or 3 (spades)
             }
             card_number = x + 1; // Assign the sum of the remainder and 1 as the card number
         }
@@ -36,10 +36,10 @@ class Card {
 			else if (card_number == 13) return "King";
 			else return to_string(card_number);
         }
-        string Card::get_suite() {
-            if (card_suite == 0) return "Clubs";
-			else if (card_suite == 1) return "Diamonds";
-			else if (card_suite == 2) return "Hearts";
+        string Card::get_suit() {
+            if (card_suit == 0) return "Clubs";
+			else if (card_suit == 1) return "Diamonds";
+			else if (card_suit == 2) return "Hearts";
 			else return "Spades";
         }
 };
@@ -75,7 +75,7 @@ class Deck {
 			if (deck_queue > 51 || deck_queue < 0) break;
 			string drawn_card = deck.at(deck_queue).get_face(); // Create a new string and store the face value
 			drawn_card += " of "; // Store " of " after the face to separate it from the suite
-			drawn_card += deck.at(deck_queue).get_suite(); // Finish the string by storing the suite
+			drawn_card += deck.at(deck_queue).get_suit(); // Finish the string by storing the suite
 			return drawn_card;
 		}
 		void Deck::shuffle() {
