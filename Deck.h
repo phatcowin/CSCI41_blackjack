@@ -44,13 +44,13 @@ string Card::get_suit() {
 
 class Deck {
    	private:
-       	vector<Card> deck(); // Create a vector to hold 52 cards, initialized as -1 (card_number == 0)
-		int deck_queue();
+       	vector<Card> deck; // Create a vector to hold 52 cards, initialized as -1 (card_number == 0)
+		int deck_queue;
    	public:
        	// Constructors:
        	Deck();
 		// Accessors:		
-		string draw();
+		string deal();
 		// Mutators:
 		void shuffle();
 };
@@ -61,15 +61,20 @@ Deck::Deck() {
 	srand(time(NULL)); // Makes rand work better, I guess
 	for (int i(0); i < 52; i++) deck.push_back(-1);
 
+	for (int i(0); i < 51; i++) {
 		do {
 			shuffle = rand() % 51; // Store a random number between 0 and 51 
-		} while (Deck::deck[shuffle].get_face() != "0"); // Continue generating random numbers until the card_number at that index is 0 (empty)...
+		} while (deck.at(shuffle).get_face() != "0"); // Continue generating random numbers until the card_number at that index is 0 (empty)...
 		deck.at(shuffle) = Card(i); // ...then assign card i to the random index
 	}
 }
+
 string Deck::deal() {
 	deck_queue++;
-	if (deck_queue > 51 || deck_queue < 0) break;
+	if (deck_queue > 51 || deck_queue < 0) {
+		deck_queue = 0;
+		shuffle();
+	}
 	string drawn_card = deck.at(deck_queue).get_face(); // Create a new string and store the face value
 	drawn_card += " of "; // Store " of " after the face to separate it from the suite
 	drawn_card += deck.at(deck_queue).get_suit(); // Finish the string by storing the suite
@@ -79,5 +84,5 @@ void Deck::shuffle() {
 	deck.clear(); // Empty the deck
 	deck_queue = -1; // Reset the deck queue
 	for (int i(0); i < 52; i++) deck.push_back(-1); // Add 52 cards initialized as -1 (card_number == 0)
-	Deck() // Then run the deck constructor to assign cards randomly to each index
+	Deck(); // Then run the deck constructor to assign cards randomly to each index
 }
