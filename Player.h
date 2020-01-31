@@ -10,7 +10,7 @@ using namespace std;
 class Player {
 	private:
 		vector<string> hand;
-		int hand_sum, wallet;
+		int hand_sum, wallet, bet;
 		bool human;
 		string name;
 	public:
@@ -21,11 +21,13 @@ class Player {
 		string get_name();
 		string get_hand(int x);
 		int get_money();
+		int get_bet();
 		int total();
 		bool busted();
 		// Mutators:
 		void draw(string x);
 		void set_money(int x);
+		void set_bet(int x);
 };
 
 // Implementations:
@@ -45,6 +47,9 @@ string Player::get_name() {
 }
 int Player::get_money() {
 	return wallet;
+}
+int Player::get_bet() {
+	return bet;
 }
 int Player::total() {
 	hand_sum = 0;
@@ -72,4 +77,7 @@ void Player::draw(string x) {
 }
 void Player::set_money(int x) {
 	wallet += x;
+}
+void Player::set_bet(int x) {
+	bet = x;
 }
