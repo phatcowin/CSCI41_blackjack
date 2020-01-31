@@ -11,8 +11,14 @@ int main() {
 	string card;
 	vector<Player> players;
 	int play_num = 0;
-	cout << "BLACK JACK\N";
-	cout << "Please enter the number of players: " << endl;
+	cout << "=====================================================\n"
+    << " ____  _        _    ____ _  __   _   _    ____ _  __\n"
+    << "| __ )| |      / \\  / ___| |/ /  | | / \\  / ___| |/ /\n"
+    << "|  _ \\| |     / _ \\| |   | ' /_  | |/ _ \\| |   | ' /\n"
+    << "| |_) | |___ / ___ \\ |___| . \\ |_| / ___ \\ |___| . \\\n"
+    << "|____/|_____/_/   \\_\\____|_|\\_\\___/_/   \\_\\____|_|\\_\\\n\n"
+    << "=====================================================\n\n"
+	<< "Please enter the number of players: " << endl;
 	cin >> play_num;
 	//create the deck
 	Deck();

@@ -20,6 +20,7 @@ class Player {
 		bool is_human();
 		string get_name();
 		string get_hand(int x);
+		void get_hand();
 		int get_money();
 		int get_bet();
 		int total();
@@ -41,6 +42,11 @@ bool Player::is_human() {
 }
 string Player::get_hand(int x) {
 	return hand.at(i);
+}
+void Player::get_hand() {
+	for (int i(0); i < hand.size(); i++) {
+		cout << get_hand(i) << "\n";
+	}
 }
 string Player::get_name() {
 	return name;
