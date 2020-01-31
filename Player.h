@@ -10,28 +10,41 @@ using namespace std;
 class Player {
 	private:
 		vector<string> hand;
-		int hand_sum;
+		int hand_sum, wallet;
 		bool human;
 		string name;
 	public:
 		// Constructors:
-		Player(bool x);
+		Player(bool x, string y);
 		// Accessors:
-		void get_hand();
+		bool is_human();
+		string get_name();
+		string get_hand(int x);
+		int get_money();
 		int total();
 		bool busted();
 		// Mutators:
 		void draw(string x);
+		void set_money(int x);
 };
 
 // Implementations:
-Player::Player(bool x) { // Make a player
+Player::Player(bool x, string y) {
 	human = x; // Set whether the player is a human or bot
+	name = y; // Set the player's name
+	wallet = 100; // All players start with 100
 }
-void Player::get_hand() {
-	for (int i(0); i < hand.size(); i++) { // For every item in the player's hand
-		cout << hand.at(i) << "\n"; // Output the item
-	}
+bool Player::is_human() {
+	return human;
+}
+string Player::get_hand(int x) {
+	return hand.at(i);
+}
+string Player::get_name() {
+	return name;
+}
+int Player::get_money() {
+	return wallet;
 }
 int Player::total() {
 	hand_sum = 0;
@@ -56,4 +69,7 @@ bool Player::busted() {
 }
 void Player::draw(string x) {
 	hand.push_back(x);
+}
+void Player::set_money(int x) {
+	wallet += x;
 }
