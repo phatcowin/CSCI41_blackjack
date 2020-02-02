@@ -1,19 +1,21 @@
 //#include <cassert>
+//#pragma once
 #include <iostream>
 #include "Player.h"
 #include "Deck.h"
 #include <vector>
+#include <string>
 using namespace std;
 
-string uppercasify(string &x) {
-	for(char c : &x) {
-		toupper(c);
+void uppercasify(string &x) {
+	for(size_t i = 0; i < x.size(); i++) {
+		x.at(i) = toupper(x.at(i));
 	}
 }
 
 int main() {
 	string input;
-	Player p1; //Problem 1
+//	Player p1; //Problem 1
 	string card;
 	vector<Player> players;
 	int play_num = 0;
@@ -21,7 +23,7 @@ int main() {
 	while(true){
 		cout << "Please enter the number of players: " << endl;
 		cin >> play_num;
-		if(!cin){
+		if(!cin || play_num < 1){
 			cout << "Please enter a valid number of players (at least 1)\n";
 			continue;
 		}
@@ -32,32 +34,33 @@ int main() {
 	Deck();
 
 	//when a player loses, cashes out/quits, or breaks the bank, they can then be removed from the vector
-	for(int i = 1; i < play_num+1; i++){ //player 0 will be the dealer
-		
+	for(int i = 0; i < play_num+1; i++){ //player 0 will be the dealer
+		players.push_back(Player(true, "Name"));
 	}
+
 	//deal cards to the players
 	for(int i = 1; i < players.size(); i++) {
 		card = deal();
 		players.at(i).draw(card);
 		card = deal();
 		players.at(i).draw(card);
-		cout << "PLAYER " << i << "'s cards: ";
+		cout << "PLAYER " << i << "'s cards: \n";
 		players.at(i).get_hand();
 	}
 
 	int turn = 1;
 	int bid = 0;
 	while(true) {
-		//show one of dealers cards
-		cout << "Dealer's shown card:\n";
-		cout << players.at(0).get_hand(0) << endl;
-		//players' turns
-	while(true){
+	//show one of dealers cards
+	cout << "Dealer's shown card:\n";
+	cout << players.at(0).get_hand(0) << endl;
+	//players' turns
+	while(true) {
 		int total = 0;
 		cout << "PLAYER " << turn << "'s turn\n";
 		cout << "PLAY or QUIT?\n";
 		cin >> input;
-		input = uppercasify(input);
+		uppercasify(input);
 		if(input == "PLAY") {
 			while(true) {
 				cout << "Make your bid\n";
@@ -66,7 +69,7 @@ int main() {
 					cout << "BAD INPUT\n";
 					continue;
 				}
-				else if(bid > players.at(turn).get_money) {
+				else if(bid > players.at(turn).get_money()) {
 					cout << "You don't have that much money\n";
 					continue;
 				}
@@ -80,16 +83,16 @@ int main() {
 			while(true) {
 				cout << "HIT or STAY?\n";
 				cin >> input;
-				input = uppercasify(input);
+				uppercasify(input);
 				if(input == "HIT") {
 					card = deal();
-					players.at(i).hand.push_back(card);
-					players.at(i).get_hand();
-					players.at(i).total();
-					if(players.at(i).busted()) {
-						cout << "BUSTED\n" << "Player " << turn << " lost $" << players.at(i).get_bet() << "!" << endl;
-						players.at(i).set_money((players.at(i).get_bet() * -1));
-						cout << "Player  " << i << " is currently at $" << players.at(i).get_money() << ".\n";
+					players.at(turn).draw(card);
+					players.at(turn).get_hand();
+					players.at(turn).total();
+					if(players.at(turn).busted()) {
+						cout << "BUSTED\n" << "Player " << turn << " lost $" << players.at(turn).get_bet() << "!" << endl;
+						players.at(turn).set_money((players.at(turn).get_bet() * -1));
+						cout << "Player  " << turn << " is currently at $" << players.at(turn).get_money() << ".\n";
 						break;
 					}
 					else continue;
@@ -130,7 +133,7 @@ int main() {
 	}
 	while(players.at(0).total() < 17) {
 		card = deal();
-		players.at(0).hand.push_back(card);
+		players.at(0).draw(card);
 		cout << "Dealer drew! Dealers new hand:\n";
 		players.at(0).get_hand();
 	}
@@ -177,5 +180,9 @@ int main() {
 			cout << "Player " << i << " has more than $1000! Player " << i << " Wins!\n";
 			return 0;
 		}
+	}	
 	}
 }
+
+
+
