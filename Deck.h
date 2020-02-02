@@ -70,15 +70,9 @@ Deck::Deck() {
 }
 
 string Deck::deal() {
-	deck_queue++;
-	if (deck_queue > 51 || deck_queue < 0) {
-		deck_queue = 0;
-		shuffle();
-	}
-	string drawn_card = deck.at(deck_queue).get_face(); // Create a new string and store the face value
-	drawn_card += " of "; // Store " of " after the face to separate it from the suite
-	drawn_card += deck.at(deck_queue).get_suit(); // Finish the string by storing the suite
-	return drawn_card;
+	string dealt_card(deck.back());
+	deck.pop_back();
+	return dealt_card;
 }
 void Deck::shuffle() {
 	deck.clear(); // Empty the deck

@@ -5,6 +5,76 @@
 #include <vectors>
 using namespace std;
 
+void add_bot(string name) {
+	Player(false, name) bot;
+	players.push_back(bot);
+}
+
+void add_bots(vector<Player> *players, int play_num) { // Feed the function &players and play_num and it will fill the remaining 
+	int bot_num(6 - play_num);
+	vector<string> bots[5] {"Hera", "Icarus", "Dionysus", "Demeter", "Echo"};
+	for (int  x(0); x < bots.size(); x++) {
+		bool bot_exists(false);
+		for (int y(0); y < players.size(); y++) if (players.at(y).get_name() == bots.at(x)) bot_exists = true;
+		if (bot_exists == true) bots.at(x) = "";
+	}
+	for (int x(0); x < bot_num; x++) {
+		srand(time(NULL));
+		int rng(rand() % 5);
+		if (bots.at(rng) != "") add_bot(bots.at(rng));
+	}
+}
+
+int bot_bet(vector<Player> *players, int i) { // Will output a given bot's bet as an integer. Needs &players and the i value of the for loop
+	double temp;
+    if (name == "Hera") {
+		temp = players.at(i).get_money() * 0.5; // Hera bets half her deck
+		return static_cast<int>(temp);
+
+    } else if (name == "Icarus") { // Icarus bets 80% of his deck
+   		temp = players.at(i).get_money() * 0.8;
+		return static_cast<int>(temp);
+
+    } else if (name == "Dionysus") { // Dionysus bets on RNG
+		srand(time(NULL));
+		temp = rand % players.at(i).get_money();
+		return static_cast<int> (temp);
+
+    } else if (name == "Echo") { // Echo copies the previous bet
+        return players.at(i - 1).get_bet();
+
+    } else if (name == "Demeter") {
+		temp = players.at(i).get_money() * 0.4; // Demeter bets conservatively
+		return static_cast<int>(temp);
+
+    } else return "";
+}
+
+string bot_turn(vector<Player> *players, int i, string input) {
+    if (players.at(i).get_name() == "Hera") { // Hera hits until her hand is 17 or higher
+		if (players.at(i).total() < 17) return "HIT";
+		else return "STAND";
+
+    } else if (players.at(i).get_name() == "Icarus") { // Icarus hits until his hand is 19 or higher
+		if (players.at(i).total() < 19) return "HIT";
+		else return "STAND";
+
+    } else if (players.at(i).get_name() == "Dionysus") { // Dionysus hits/stands on rng
+		srand(time(NULL));
+		bool rng(rand() % 2 - 1);
+		if (rng == 0) return "HIT";
+		else return "STAND";
+
+    } else if (players.at(i).get_name() == "Echo") { // Echo copies the previous player's turn
+		return input; 
+
+    } else if (players.at(i).get_name() == "Demeter") { // Demeter bets until she has 4 cards in her hand
+		if (players.at.(i).hand_size() < 4) return "BET";
+		else return "STAND";
+
+    } else return "Error: bot_turn() did not recognize the player name.";
+}
+
 int main() {
 	string input;
 	Player p1;
@@ -51,7 +121,7 @@ int main() {
 		cin >> input;
 		if(input == "PLAY") {
 			while(true) {
-				cout << "Make you're bid\n";
+				cout << "Make your bid\n";
 				cin >> bid;
 				if(!cin) {
 					cout << "BAD INPUT\n";
@@ -89,7 +159,7 @@ int main() {
 		cout << "HIT, STAY, or QUIT\n";
 		cin >> input;
 		if(/*hit*/) {
-			players.at(i).push_back(draw());
+			players.at(i).draw(deal());
 		}
 		if(/*quit*/) {
 		}

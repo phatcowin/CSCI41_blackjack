@@ -24,6 +24,7 @@ class Player {
 		int get_money();
 		int get_bet();
 		int total();
+		int hand_size();
 		bool busted();
 		// Mutators:
 		void draw(string x);
@@ -73,6 +74,9 @@ int Player::total() {
 		aces--;
 	}
 	return hand_sum;
+}
+int Player::hand_size() {
+	return hand.size();
 }
 bool Player::busted() {
 	if (hand_sum > 21) return true;
