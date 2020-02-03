@@ -83,14 +83,14 @@ string bot_turn(vector<Player> &players, int i, string input) {
 int main() {
 	srand(time(0));
 	string input;
-	Player(true, "Name"); //Problem 1
+	Player(true, "Name"); 
 	string card;
 	vector<Player> players;
 //	Card(52);
 	Deck deck;
 	int play_num = 0;
 	cout << "BLACK JACK\n";
-	cout << "Dumping out the deck" << endl;
+//	cout << "Dumping out the deck" << endl;
 	/*deck.dump();
 	return 0;*/
 	while(true){
@@ -101,6 +101,7 @@ int main() {
 			continue;
 		}
 		else break;
+
 	}
 
 	//create the deck
