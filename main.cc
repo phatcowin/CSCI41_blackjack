@@ -157,7 +157,7 @@ int main() {
 				cout << "Make your bid\n";
 				cin >> check;
 				for(size_t i = 0; i < check.size(); i++) {
-					if(!isdigit(check.at(i))) {
+					if(!isdigit(check.at(i)) || !cin) {
 						cout << "Please enter a valid number.\n";
 						cin >> check;
 						i = 0;
