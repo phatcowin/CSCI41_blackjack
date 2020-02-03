@@ -21,6 +21,7 @@ class Card {
 // Implementations:
 Card::Card(int x) {
 	// TO DO: Break if the card value is invalid
+	card_suit = 0;
 	while (x > 12) { // Assign the number of times 13 can be subtracted from our card number and remain above 12 to the card suite
 		x -= 13;
  		card_suit++; // Card suite is either 0 (clubs), 1 (diamonds), 2 (hearts) or 3 (spades)
