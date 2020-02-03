@@ -138,6 +138,7 @@ int main() {
 
 	size_t turn = 1;
 	int bid = 0;
+	string check;
 	while(true) {
 	//show one of dealers cards
 	cout << "Dealer's shown card:\n";
@@ -147,18 +148,23 @@ int main() {
 		if(players.size() < 2) break;
 		int total = 0;
 		cout << "PLAYER " << turn << "'s turn\n";
+		cout << "Your hand total is: " << players.at(turn).total() << endl;
 		cout << "PLAY or QUIT?\n";
 		cin >> input;
 		uppercasify(input);
 		if(input == "PLAY") {
 			while(true) {
 				cout << "Make your bid\n";
-				cin >> bid; 
-				if(!cin) {
-					cout << "BAD INPUT\n";
-					continue;
+				cin >> check;
+				for(size_t i = 0; i < check.size(); i++) {
+					if(!isdigit(check.at(i))) {
+						cout << "Please enter a valid number.\n";
+						cin >> check;
+						i = 0;
+					}
 				}
-				else if(bid > players.at(turn).get_money()) {
+				bid = stoi(check);
+				if(bid > players.at(turn).get_money()) {
 					cout << "You don't have that much money\n";
 					continue;
 				}
@@ -209,7 +215,7 @@ int main() {
 			cout << "BAD INPUT\n";
 			continue;
 		}
-		if(turn >= players.size()) {
+		if(turn >= players.size() - 1) {
 			turn = 1;
 			break;
 		}
