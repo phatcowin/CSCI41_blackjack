@@ -7,12 +7,17 @@
 #include <string>
 using namespace std;
 
+void uppercasify(string &x) {
+	for(size_t i = 0; i < x.size(); i++) {
+		x.at(i) = toupper(x.at(i));
+	}
+}
+/*
 void add_bot(string name) {
-	Player(false, name) bot;
-	players.push_back(bot);
+	players.push_back(Player(false, "name");
 }
 
-void add_bots(vector<Player> *players, int play_num) { // Feed the function &players and play_num and it will fill the remaining 
+void add_bots(vector<Player> &players, int play_num) { // Feed the function &players and play_num and it will fill the remaining 
 	int bot_num(6 - play_num);
 	vector<string> bots[5] {"Hera", "Icarus", "Dionysus", "Demeter", "Echo"};
 	for (int  x(0); x < bots.size(); x++) {
@@ -21,38 +26,36 @@ void add_bots(vector<Player> *players, int play_num) { // Feed the function &pla
 		if (bot_exists == true) bots.at(x) = "";
 	}
 	for (int x(0); x < bot_num; x++) {
-		srand(time(NULL));
 		int rng(rand() % 5);
 		if (bots.at(rng) != "") add_bot(bots.at(rng));
 	}
 }
 
-int bot_bet(vector<Player> *players, int i) { // Will output a given bot's bet as an integer. Needs &players and the i value of the for loop
+int bot_bet(vector<Player> &players, int i) { // Will output a given bot's bet as an integer. Needs &players and the i value of the for loop
 	double temp;
-    if (name == "Hera") {
+    if (players.at(i).get_name() == "Hera") {
 		temp = players.at(i).get_money() * 0.5; // Hera bets half her deck
 		return static_cast<int>(temp);
 
-    } else if (name == "Icarus") { // Icarus bets 80% of his deck
+    } else if (players.at(i).get_name() == "Icarus") { // Icarus bets 80% of his deck
    		temp = players.at(i).get_money() * 0.8;
 		return static_cast<int>(temp);
 
-    } else if (name == "Dionysus") { // Dionysus bets on RNG
-		srand(time(NULL));
-		temp = rand % players.at(i).get_money();
+    } else if (players.at(i).get_name() == "Dionysus") { // Dionysus bets on RNG
+		temp = rand() % players.at(i).get_money();
 		return static_cast<int> (temp);
 
-    } else if (name == "Echo") { // Echo copies the previous bet
+    } else if (players.at(i).get_name() == "Echo") { // Echo copies the previous bet
         return players.at(i - 1).get_bet();
 
-    } else if (name == "Demeter") {
+    } else if (players.at(i).get_name() == "Demeter") {
 		temp = players.at(i).get_money() * 0.4; // Demeter bets conservatively
 		return static_cast<int>(temp);
 
-    } else return "";
+    } else return 0;
 }
 
-string bot_turn(vector<Player> *players, int i, string input) {
+string bot_turn(vector<Player> &players, int i, string input) {
     if (players.at(i).get_name() == "Hera") { // Hera hits until her hand is 17 or higher
 		if (players.at(i).total() < 17) return "HIT";
 		else return "STAND";
@@ -62,7 +65,6 @@ string bot_turn(vector<Player> *players, int i, string input) {
 		else return "STAND";
 
     } else if (players.at(i).get_name() == "Dionysus") { // Dionysus hits/stands on rng
-		srand(time(NULL));
 		bool rng(rand() % 2 - 1);
 		if (rng == 0) return "HIT";
 		else return "STAND";
@@ -71,25 +73,26 @@ string bot_turn(vector<Player> *players, int i, string input) {
 		return input; 
 
     } else if (players.at(i).get_name() == "Demeter") { // Demeter bets until she has 4 cards in her hand
-		if (players.at.(i).hand_size() < 4) return "BET";
+		//if (players.at(i).hand.size() < 4) return "BET";
 		else return "STAND";
 
     } else return "Error: bot_turn() did not recognize the player name.";
+	return "";
 }
-
-void uppercasify(string &x) {
-	for(size_t i = 0; i < x.size(); i++) {
-		x.at(i) = toupper(x.at(i));
-	}
-}
-
+*/
 int main() {
+	srand(time(0));
 	string input;
-//	Player p1; //Problem 1
+	Player(true, "Name"); //Problem 1
 	string card;
 	vector<Player> players;
+//	Card(52);
+	Deck deck;
 	int play_num = 0;
 	cout << "BLACK JACK\n";
+	cout << "Dumping out the deck" << endl;
+	/*deck.dump();
+	return 0;*/
 	while(true){
 		cout << "Please enter the number of players: " << endl;
 		cin >> play_num;
@@ -101,24 +104,39 @@ int main() {
 	}
 
 	//create the deck
-	Deck();
 
 	//when a player loses, cashes out/quits, or breaks the bank, they can then be removed from the vector
 	for(int i = 0; i < play_num+1; i++){ //player 0 will be the dealer
 		players.push_back(Player(true, "Name"));
 	}
-
+	
+/*	
+	while(true) {
+		cout << "Please enter the number of bots you would like to play with:\n";
+		cin >> play_num;
+		if(!cin || play_num < 0) {
+			cout << "Please enter a valid number of bot players (zero or more)\n";
+		continue;
+		}
+		else break;
+	}
+*/
 	//deal cards to the players
-	for(int i = 1; i < players.size(); i++) {
-		card = deal();
+	for(size_t i = 0; i < players.size(); i++) {
+//		cerr << players.size();
+		card = deck.deal();
 		players.at(i).draw(card);
-		card = deal();
+		card = deck.deal();
 		players.at(i).draw(card);
-		cout << "PLAYER " << i << "'s cards: \n";
-		players.at(i).get_hand();
+//		players.at(i).draw();
+//		players.at(i).draw();
+		if(i > 0) {
+			cout << "PLAYER " << i << "'s cards: \n";
+			players.at(i).get_hand();
+		}
 	}
 
-	int turn = 1;
+	size_t turn = 1;
 	int bid = 0;
 	while(true) {
 	//show one of dealers cards
@@ -126,6 +144,7 @@ int main() {
 	cout << players.at(0).get_hand(0) << endl;
 	//players' turns
 	while(true) {
+		if(players.size() < 2) break;
 		int total = 0;
 		cout << "PLAYER " << turn << "'s turn\n";
 		cout << "PLAY or QUIT?\n";
@@ -155,7 +174,7 @@ int main() {
 				cin >> input;
 				uppercasify(input);
 				if(input == "HIT") {
-					card = deal();
+					card = deck.deal();
 					players.at(turn).draw(card);
 					players.at(turn).get_hand();
 					players.at(turn).total();
@@ -176,33 +195,45 @@ int main() {
 		}
 		else if(input == "QUIT") {
 			cout << "Player " << turn << " drops out! Player " << turn << " won $" << players.at(turn).get_money() << endl;
-			for(int i = turn; i < players.size()-1; i++) {
-				players.at(i) = players.at(i+1);
+			for(size_t i = turn; i < players.size()-1; i++) {
+				if(players.size() == 2) {
+					players.pop_back();
+					break;
+				}
+				else players.at(i) = players.at(i+1);
 			}
-			players.pop_back();
+			if(players.size() > 1) players.pop_back();
+			else break;
 		}
 		else {
 			cout << "BAD INPUT\n";
 			continue;
 		}
-		if(turn == players.size()) break;
+		if(turn >= players.size()) {
+			turn = 1;
+			break;
+		}
 		else turn++;
 	}
 	//dealer's turn
+	if(players.size() < 2) {
+		cout << "There are no more players. The House wins!\n";
+		return 0;
+	}
 	cout << "Dealer's turn\n";
 	cout << "Dealer's cards:\n";
 	players.at(0).get_hand();
 	//Put if dealer BLACKJACKS here
 	if(players.at(0).total() == 21) {
 		cout << "Dealer Blackjacks!\n";
-		for(int i = 1; i < players.size(); i++) {
+		for(size_t i = 1; i < players.size(); i++) {
 			cout << "Player " << i << " lost $" << players.at(i).get_bet() << "!\n";
 			players.at(i).set_money((players.at(i).get_bet() * -1));
 			cout << "Player  " << i << " is currently at $" << players.at(i).get_money() << ".\n";
 		}
 	}
 	while(players.at(0).total() < 17) {
-		card = deal();
+		card = deck.deal();
 		players.at(0).draw(card);
 		cout << "Dealer drew! Dealers new hand:\n";
 		players.at(0).get_hand();
@@ -210,14 +241,14 @@ int main() {
 	//Dealer busts
 	if(players.at(0).total() > 21) {
 		cout << "Dealer busted!" << endl;
-		for(int i = 1; i < players.size(); i++) {
+		for(size_t i = 1; i < players.size(); i++) {
 			if(players.at(i).total() < 22) {
 				players.at(i).set_money(players.at(i).get_bet());
 			}
 		}
 	}
 	//calculating winners (no money awarded or taken during tie)
-	for(int i = 1; i < players.size(); i++) {
+	for(size_t i = 1; i < players.size(); i++) {
 		int dealer_total = players.at(0).total();
 		int player_total = players.at(i).total();
 		if(dealer_total > player_total) {
@@ -238,10 +269,10 @@ int main() {
 		}
 	}
 	//win lose <$5 or $1000
-	for(int i = 1; i < players.size(); i++) {
+	for(size_t i = 1; i < players.size(); i++) {
 		if(players.at(i).get_money() < 5) {
 			cout << "Player " << i << " has less than $5. Player " << i << " loses.\n";
-			for(int j = i; j < players.size() - 1; j++) {
+			for(size_t j = i; j < players.size() - 1; j++) {
 				players.at(j) = players.at(j+1);
 			}
 			players.pop_back();
@@ -250,7 +281,8 @@ int main() {
 			cout << "Player " << i << " has more than $1000! Player " << i << " Wins!\n";
 			return 0;
 		}
-	}	
+	}
+	Deck();
 	}
 }
 
