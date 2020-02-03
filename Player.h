@@ -24,10 +24,10 @@ class Player {
 		int get_money();
 		int get_bet();
 		int total();
-		int hand_size();
 		bool busted();
 		// Mutators:
 		void draw(string x);
+	//	void draw();
 		void set_money(int x);
 		void set_bet(int x);
 };
@@ -45,13 +45,14 @@ string Player::get_hand(int x) {
 	return hand.at(x);
 }
 void Player::get_hand() {
-	for (int i(0); i < hand.size(); i++) {
+	for (size_t i(0); i < hand.size(); i++) {
 		cout << get_hand(i) << "\n";
 	}
 }
 string Player::get_name() {
 	return name;
 }
+
 int Player::get_money() {
 	return wallet;
 }
@@ -61,7 +62,7 @@ int Player::get_bet() {
 int Player::total() {
 	hand_sum = 0;
 	int aces(0);
-	for (int i(0); i < hand.size(); i++) { // For every item in the player's hand...
+	for (size_t i(0); i < hand.size(); i++) { // For every item in the player's hand...
 		if (to_string(hand.at(i)[0]) == "A") { // If it's an ace, add 1 to the ace count and the hand sum
 			hand_sum++;
 			aces++;
@@ -75,9 +76,6 @@ int Player::total() {
 	}
 	return hand_sum;
 }
-int Player::hand_size() {
-	return hand.size();
-}
 bool Player::busted() {
 	if (hand_sum > 21) return true;
 	else return false;
@@ -85,6 +83,11 @@ bool Player::busted() {
 void Player::draw(string x) {
 	hand.push_back(x);
 }
+/*void Player::draw() {
+	string x = deal();
+	hand.push_back(x);
+}*/
+
 void Player::set_money(int x) {
 	wallet += x;
 }

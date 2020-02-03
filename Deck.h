@@ -51,6 +51,7 @@ class Deck {
        	Deck();
 		// Accessors:		
 		string deal();
+		void dump();
 		// Mutators:
 		void shuffle();
 };
@@ -68,14 +69,25 @@ Deck::Deck() {
 		deck.at(shuffle) = Card(i); // ...then assign card i to the random index
 	}
 }
+void Deck::dump() {
+	for(size_t i = 0; i < 52; i++) {
+	string drawn_card = deck.at(i).get_face(); // Create a new string and store the face value
+	drawn_card += " of "; // Store " of " after the face to separate it from the suite
+	drawn_card += deck.at(i).get_suit(); // Finish the string by storing the suite
+	cout << drawn_card << endl;
+	}
+}
 
 string Deck::deal() {
-	string dealt_card;
-	dealt_card = deck.at(51 - deck_queue).get_face();
-	dealt_card += " of ";
-	dealt_card += deck.at(51 - deck_queue).get_suit();
 	deck_queue++;
-	return dealt_card;
+	if (deck_queue > 51 || deck_queue < 0) {
+		deck_queue = 0;
+		shuffle();
+	}
+	string drawn_card = deck.at(deck_queue).get_face(); // Create a new string and store the face value
+	drawn_card += " of "; // Store " of " after the face to separate it from the suite
+	drawn_card += deck.at(deck_queue).get_suit(); // Finish the string by storing the suite
+	return drawn_card;
 }
 void Deck::shuffle() {
 	deck.clear(); // Empty the deck
