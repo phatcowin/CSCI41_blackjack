@@ -104,7 +104,6 @@ int main() {
 
 	}
 
-	//create the deck
 
 	//when a player loses, cashes out/quits, or breaks the bank, they can then be removed from the vector
 	for(int i = 0; i < play_num+1; i++){ //player 0 will be the dealer
