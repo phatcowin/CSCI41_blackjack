@@ -42,7 +42,7 @@ bool Player::is_human() {
 	return human;
 }
 string Player::get_hand(int x) {
-	return hand.at(i);
+	return hand.at(x);
 }
 void Player::get_hand() {
 	for (int i(0); i < hand.size(); i++) {

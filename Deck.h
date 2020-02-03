@@ -70,8 +70,11 @@ Deck::Deck() {
 }
 
 string Deck::deal() {
-	string dealt_card(deck.back());
-	deck.pop_back();
+	string dealt_card;
+	dealt_card = deck.at(51 - deck_queue).get_face();
+	dealt_card += " of ";
+	dealt_card += deck.at(51 - deck_queue).get_suit();
+	deck_queue++;
 	return dealt_card;
 }
 void Deck::shuffle() {
