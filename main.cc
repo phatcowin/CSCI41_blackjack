@@ -220,6 +220,10 @@ int main() {
 			cout << "BAD INPUT\n";
 			continue;
 		}
+		if(players.size() < 2) {
+			cout << "There are no more players. The House wins!\n";
+			return 0;
+		}
 		if(turn >= players.size() - 1) {
 			turn = 1;
 			break;
