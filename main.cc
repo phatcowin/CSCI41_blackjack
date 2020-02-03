@@ -89,25 +89,28 @@ int main() {
 //	Card(52);
 	Deck deck;
 	int play_num = 0;
-	cout << "BLACK JACK\n";
+	cout << "\n\nBLACK JACK\n\n";
 //	cout << "Dumping out the deck" << endl;
 	/*deck.dump();
 	return 0;*/
 	while(true){
 		cout << "Please enter the number of players: " << endl;
-		cin >> play_num;
-		if(!cin || play_num < 1){
-			cout << "Please enter a valid number of players (at least 1)\n";
+		cin >> input;
+		if(!isdigit(input.at(0))){
+			cout << "Invalid input!\n";
 			continue;
 		}
 		else break;
-
 	}
-
-
-	//when a player loses, cashes out/quits, or breaks the bank, they can then be removed from the vector
-	for(int i = 0; i < play_num+1; i++){ //player 0 will be the dealer
-		players.push_back(Player(true, "Name"));
+	play_num = stoi(input);
+	
+	//creating the dealer. Player 0 will be the dealer
+	players.push_back(Player(true, "Dealer"));
+	for(int i = 0; i < play_num; i++){
+		string name;
+		cout << "Please enter your name:\n";
+		cin >> name;
+		players.push_back(Player(true, name));
 	}
 	
 /*	
@@ -131,7 +134,7 @@ int main() {
 //		players.at(i).draw();
 //		players.at(i).draw();
 		if(i > 0) {
-			cout << "PLAYER " << i << "'s cards: \n";
+			cout << endl << players.at(i).get_name() << "'s cards: \n";
 			players.at(i).get_hand();
 		}
 	}
@@ -147,8 +150,9 @@ int main() {
 	while(true) {
 		if(players.size() < 2) break;
 		int total = 0;
-		cout << "PLAYER " << turn << "'s turn\n";
+		cout << endl << players.at(turn).get_name() << "'s turn\n\n";
 		cout << "Your hand total is: " << players.at(turn).total() << endl;
+		cout << "Your current money is : " << players.at(turn).get_money() << endl;
 		cout << "PLAY or QUIT?\n";
 		cin >> input;
 		uppercasify(input);
@@ -165,11 +169,11 @@ int main() {
 				}
 				bid = stoi(check);
 				if(bid > players.at(turn).get_money()) {
-					cout << "You don't have that much money\n";
+					cout << "You don't have that much money\n\n";
 					continue;
 				}
 				else if(bid <= 0) {
-					cout << "You can't bid less than $1\n";
+					cout << "You can't bid less than $1\n\n";
 					continue;
 				}
 				else players.at(turn).set_bet(bid);
@@ -178,6 +182,7 @@ int main() {
 			while(true) {
 				cout << "HIT or STAY?\n";
 				cin >> input;
+				cout << endl;
 				uppercasify(input);
 				if(input == "HIT") {
 					card = deck.deal();
@@ -257,34 +262,34 @@ int main() {
 	for(size_t i = 1; i < players.size(); i++) {
 		int dealer_total = players.at(0).total();
 		int player_total = players.at(i).total();
-		if(dealer_total > player_total) {
+		if(dealer_total > player_total && !players.at(0).busted()) {
 			//dealer win conditions here
-			cout << "Player " << i << " lost $" << players.at(i).get_bet() << "!\n";
+			cout << players.at(i).get_name() << " lost $" << players.at(i).get_bet() << "!\n";
 			players.at(i).set_money((players.at(i).get_bet() * -1));
-			cout << "Player  " << i << " is currently at $" << players.at(i).get_money() << ".\n";
+			cout << players.at(i).get_name() << " is currently at $" << players.at(i).get_money() << ".\n\n";
 		}
-		else if(player_total > dealer_total) {
+		else if(!(players.at(i).busted()) && player_total > dealer_total) {
 			//player win conditions here
 			cout << "Player " << i << " won $" << players.at(i).get_bet() << "!\n";
 			players.at(i).set_money((players.at(i).get_bet() * 1.5));
-			cout << "Player  " << i << " is currently at $" << players.at(i).get_money() << ".\n";
+			cout << players.at(i).get_name() << " is currently at $" << players.at(i).get_money() << ".\n\n";
 		}
 		else {
-			cout << "Player " << i << " and the Dealer tied! No money won or lost.\n";
+			cout <<  players.at(i).get_name() << " and the Dealer tied! No money won or lost.\n\n";
 			continue;
 		}
 	}
 	//win lose <$5 or $1000
 	for(size_t i = 1; i < players.size(); i++) {
 		if(players.at(i).get_money() < 5) {
-			cout << "Player " << i << " has less than $5. Player " << i << " loses.\n";
+			cout << players.at(i).get_name() << " has less than $5. Player " << i << " loses.\n";
 			for(size_t j = i; j < players.size() - 1; j++) {
 				players.at(j) = players.at(j+1);
 			}
 			players.pop_back();
 		}
 		if(players.at(i).get_money() > 1000) {
-			cout << "Player " << i << " has more than $1000! Player " << i << " Wins!\n";
+			cout << players.at(i).get_name() << " has more than $1000! " << players.at(i).get_name() << " Wins!\n";
 			return 0;
 		}
 	}
