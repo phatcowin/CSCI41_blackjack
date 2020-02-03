@@ -59,6 +59,7 @@ class Deck {
 
 // Implementations:
 Deck::Deck() {
+	deck_queue = 0;
 	int shuffle; // Create an int to store our randomly generated number
 	srand(time(NULL)); // Makes rand work better, I guess
 	for (int i(0); i < 52; i++) deck.push_back(-1);
@@ -93,6 +94,6 @@ string Deck::deal() {
 void Deck::shuffle() {
 	deck.clear(); // Empty the deck
 	deck_queue = -1; // Reset the deck queue
-	for (int i(0); i < 52; i++) deck.push_back(-1); // Add 52 cards initialized as -1 (card_number == 0)
+	for (int i(0); i < 52; i++) deck.pop_back(); // Add 52 cards initialized as -1 (card_number == 0)
 	Deck(); // Then run the deck constructor to assign cards randomly to each index
 }

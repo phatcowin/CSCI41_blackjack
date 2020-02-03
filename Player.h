@@ -66,7 +66,7 @@ int Player::total() {
 	string hax;
 
 	for (long unsigned int i(0); i < hand.size(); i++) { // For every item in the player's hand...
-		cout << "FOR EVERY ITEM... " << hand_sum << " " << u_int(hand.at(i)[0]) << "\n";
+	//	cout << "FOR EVERY ITEM... " << hand_sum << " " << u_int(hand.at(i)[0]) << "\n";
 		hack = hand.at(i)[0];
 		hax = (1, hack);
 		if (hax == "A") { // If it's an ace, add 1 to the ace count and the hand sum
@@ -78,14 +78,14 @@ int Player::total() {
 			int hacked = hack - '0';
 			hand_sum += hacked;
 		}
-		cout << hax << "\n";
+	//	cout << hax << "\n";
 	}
-	cout << "BEFORE ACES: " << hand_sum << "\n";
+//	cout << "BEFORE ACES: " << hand_sum << "\n";
 	while (aces > 0 && hand_sum < 12) { // Change the value of as many aces as possible to 11
 		hand_sum += 10;
 		aces--;
 	}
-	cout << "AFTER ACES: " << hand_sum << "\n";
+//	cout << "AFTER ACES: " << hand_sum << "\n";
 	return hand_sum;
 }
 int Player::hand_size() {
